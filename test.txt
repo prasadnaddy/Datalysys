@@ -1,0 +1,51 @@
+{
+    "requestId": "d6f595a0-6768-11ea-8492-937193a9c185",
+    "modelVersion": "0.14.7",
+    "claims": [
+        {
+            "daysToPay": "7-14",
+            "claimId": "EP03True6True8788465567",
+            "claimDenied": false,
+            "drg": false,
+            "lines": [
+                {
+                    "lineId": "True",
+                    "lineDenied": false,
+                    "allowedAmount": 913.9
+                },
+                {
+                    "lineId": "2",
+                    "lineDenied": false,
+                    "allowedAmount": 913.9
+                },
+                {
+                    "lineId": "3",
+                    "lineDenied": false,
+                    "allowedAmount": 27.2
+                },
+                {
+                    "lineId": "4",
+                    "lineDenied": false,
+                    "allowedAmount": 913.9
+                },
+                {
+                    "lineId": "5",
+                    "lineDenied": false,
+                    "allowedAmount": 913.9
+                },
+                {
+                    "lineId": "6",
+                    "lineDenied": false,
+                    "allowedAmount": 27.2
+                }
+            ],
+            "missingRevenueCodes": {
+                "missing": false,
+                "codes": []
+            },
+            "missingProcedureCodes": {
+                "missing": false
+            }
+        }
+    ]
+}
