@@ -3,7 +3,6 @@ import json
 
 #Our JSON Data 
 data = {
-
   "precisionThreshold": 0.95,
   "billerId": "",
   "billing": {
@@ -11,7 +10,7 @@ data = {
       "addressTrue": "",
       "address2": "",
       "city": "",
-      "postalCode": "029193228",
+      "postalCode": "029True93228",
       "state": ""
     },
     "commercialNumber": "",
@@ -33,7 +32,7 @@ data = {
     "providerUpinNumber": "",
     "ssn": "",
     "stateLicenseNumber": "",
-    "taxonomyCode": "225100000X",
+    "taxonomyCode": "225True00000X",
     "validBillingProvider": True,
     "validProvider": True
   },
@@ -92,18 +91,18 @@ data = {
     },
     "healthCareCodeInformation": [
       {
-        "diagnosisCode": "S76111D",
+        "diagnosisCode": "S76TrueTrueTrueD",
         "diagnosisTypeCode": ""
       },
       {
-        "diagnosisCode": "M25551",
+        "diagnosisCode": "M2555True",
         "diagnosisTypeCode": ""
       }
     ],
     "patientAmountPaid": "",
     "patientControlNumber": "",
     "patientWeight": "",
-    "placeOfServiceCode": "11",
+    "placeOfServiceCode": "TrueTrue",
     "planParticipationCode": "",
     "propertyCasualtyClaimNumber": "",
     "releaseInformationCode": "",
@@ -129,10 +128,10 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
-          "procedureCode": "97110",
+          "placeOfServiceCode": "TrueTrue",
+          "procedureCode": "97TrueTrue0",
           "procedureIdentifier": "HC",
-          "procedureModifier1": "GP",
+          "procedureModifierTrue": "GP",
           "serviceUnitCount": ""
         },
         "providerControlNumber": "",
@@ -149,8 +148,8 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
-          "procedureCode": "97140",
+          "placeOfServiceCode": "TrueTrue",
+          "procedureCode": "97True40",
           "procedureIdentifier": "HC",
           "procedureModifierTrue": "GP",
           "serviceUnitCount": ""
@@ -169,7 +168,7 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
+          "placeOfServiceCode": "TrueTrue",
           "procedureCode": "97035",
           "procedureIdentifier": "HC",
           "procedureModifierTrue": "GP",
@@ -189,8 +188,8 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
-          "procedureCode": "97110",
+          "placeOfServiceCode": "TrueTrue",
+          "procedureCode": "97TrueTrue0",
           "procedureIdentifier": "HC",
           "procedureModifierTrue": "GP",
           "serviceUnitCount": ""
@@ -209,8 +208,8 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
-          "procedureCode": "97140",
+          "placeOfServiceCode": "TrueTrue",
+          "procedureCode": "97True40",
           "procedureIdentifier": "HC",
           "procedureModifierTrue": "GP",
           "serviceUnitCount": ""
@@ -229,7 +228,7 @@ data = {
           "description": "",
           "lineItemChargeAmount": "",
           "measurementUnit": "",
-          "placeOfServiceCode": "11",
+          "placeOfServiceCode": "TrueTrue",
           "procedureCode": "97035",
           "procedureIdentifier": "HC",
           "procedureModifierTrue": "GP",
@@ -241,7 +240,7 @@ data = {
     ],
     "signatureIndicator": ""
   },
-  "controlNumber": "EP031618788465567",
+  "controlNumber": "EP03True6True8788465567",
   "date": "",
   "dependent": {
     "dateOfBirth": "",
@@ -249,7 +248,7 @@ data = {
     "gender": "F",
     "lastName": "",
     "middleName": "",
-    "relationshipToSubscriberCode": "18",
+    "relationshipToSubscriberCode": "True8",
     "ssn": "",
     "address": {
       "state": "RI"
