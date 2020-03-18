@@ -1,3 +1,92 @@
 {
-    "message": "Invalid request body"
+    "requestId": "c95ee3d0-690a-11ea-9b3a-77424178af2b",
+    "modelVersion": "0.14.7",
+    "claims": [
+        {
+            "daysToPay": "7-14",
+            "claimId": "3197870",
+            "claimDenied": false,
+            "drg": false,
+            "lines": [
+                {
+                    "lineId": "1",
+                    "lineDenied": false,
+                    "allowedAmount": 87.86
+                },
+                {
+                    "lineId": "2",
+                    "lineDenied": true,
+                    "allowedAmount": 70.88,
+                    "denialReasons": [
+                        {
+                            "reason": "Service not covered",
+                            "probability": 0.377,
+                            "eraCarcCodes": [
+                                {
+                                    "code": "CO256",
+                                    "probability": 0.87
+                                },
+                                {
+                                    "code": "CO96",
+                                    "probability": 0.106
+                                },
+                                {
+                                    "code": "PI96",
+                                    "probability": 0.018
+                                }
+                            ]
+                        },
+                        {
+                            "reason": "Duplicate Claim / Service",
+                            "probability": 0.171,
+                            "eraCarcCodes": [
+                                {
+                                    "code": "OA18",
+                                    "probability": 0.935
+                                },
+                                {
+                                    "code": "CO18",
+                                    "probability": 0.025
+                                },
+                                {
+                                    "code": "COB13",
+                                    "probability": 0.02
+                                }
+                            ]
+                        },
+                        {
+                            "reason": "Bundling",
+                            "probability": 0.126,
+                            "eraCarcCodes": [
+                                {
+                                    "code": "OA94",
+                                    "probability": 0.451
+                                },
+                                {
+                                    "code": "CO234",
+                                    "probability": 0.283
+                                },
+                                {
+                                    "code": "CO97",
+                                    "probability": 0.152
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "lineId": "3",
+                    "lineDenied": false,
+                    "allowedAmount": 4.07
+                }
+            ],
+            "missingRevenueCodes": {
+                "missing": false,
+                "codes": []
+            },
+            "missingProcedureCodes": {
+                "missing": false
+            }
+        }
+    ]
 }

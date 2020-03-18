@@ -1,0 +1,18 @@
+[
+    {
+        "CENTERID": 1000,
+        "VoucherNumber": 3197870,
+        "TimeStamp": null,
+        "UserId": 1,
+        "DaysToPay": "7-14",
+        "Drg": false,
+        "ClaimStatus": false,
+        "IsMissingRevenueCodes": false,
+        "MissingRevenueCodes": "",
+        "IsMissingProcedureCodes": false,
+        "missingProcedureCodes": "",
+        "ErrorResponse": false,
+        "ResponseJSON": "{\"daysToPay\":\"7-14\",\"claimId\":\"3197870\",\"claimDenied\":false,\"drg\":false,\"lines\":[{\"lineId\":\"1\",\"lineDenied\":false,\"allowedAmount\":87.86},{\"lineId\":\"2\",\"lineDenied\":false,\"allowedAmount\":70.88},{\"lineId\":\"3\",\"lineDenied\":false,\"allowedAmount\":4.07}],\"missingRevenueCodes\":{\"missing\":false,\"codes\":[]},\"missingProcedureCodes\":{\"missing\":false}}",
+        "RequestJSON": null
+    }
+]

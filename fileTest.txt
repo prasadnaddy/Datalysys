@@ -1,8 +1,4 @@
-import requests
-import json
-
-#Our JSON Data 
-data = {
+{
     "precisionThreshold": 0.85,
     "billerId": "",
     "billing": {
@@ -19,7 +15,7 @@ data = {
             "faxNumber": "",
             "name": "",
             "phoneNumber": "",
-            "validContact": True
+            "validContact": true
         },
         "employerId": "",
         "firstName": "",
@@ -33,12 +29,12 @@ data = {
         "ssn": "",
         "stateLicenseNumber": "",
         "taxonomyCode": "225100000X",
-        "validBillingProvider": True,
-        "validProvider": True
+        "validBillingProvider": true,
+        "validProvider": true
     },
     "claimInformation": {
         "benefitsAssignmentCertificationIndicator": "Y",
-        "claimChargeAmount": "220",
+        "claimChargeAmount": "440.0",
         "claimContractInformation": {
             "contractAmount": "",
             "contractCode": "",
@@ -138,7 +134,7 @@ data = {
         "patientAmountPaid": "",
         "patientControlNumber": "",
         "patientWeight": "",
-        "placeOfServiceCode": "11",
+        "placeOfServiceCode": "149325",
         "planParticipationCode": "A",
         "propertyCasualtyClaimNumber": "",
         "releaseInformationCode": "Y",
@@ -172,7 +168,7 @@ data = {
                         ]
                     },
                     "description": "",
-                    "lineItemChargeAmount": "209",
+                    "lineItemChargeAmount": "209.00",
                     "measurementUnit": "UN",
                     "placeOfServiceCode": "",
                     "procedureCode": "99214",
@@ -181,7 +177,7 @@ data = {
                     "procedureModifier1": ""
                 },
                 "providerControlNumber": "",
-                "serviceDate": "20190130"
+                "serviceDate": "20200120"
             },
             {
                 "assignedNumber": "2",
@@ -192,16 +188,16 @@ data = {
                         ]
                     },
                     "description": "",
-                    "lineItemChargeAmount": "0",
+                    "lineItemChargeAmount": "0.00",
                     "measurementUnit": "UN",
                     "placeOfServiceCode": "",
-                    "procedureCode": "S9470",
+                    "procedureCode": "0.00",
                     "procedureIdentifier": "HC",
                     "serviceUnitCount": "1",
                     "procedureModifier1": ""
                 },
                 "providerControlNumber": "",
-                "serviceDate": "20190130"
+                "serviceDate": "20200120"
             },
             {
                 "assignedNumber": "3",
@@ -213,7 +209,7 @@ data = {
                         ]
                     },
                     "description": "",
-                    "lineItemChargeAmount": "11",
+                    "lineItemChargeAmount": "11.00",
                     "measurementUnit": "UN",
                     "placeOfServiceCode": "",
                     "procedureCode": "82947",
@@ -222,12 +218,12 @@ data = {
                     "procedureModifier1": ""
                 },
                 "providerControlNumber": "",
-                "serviceDate": "20190130"
+                "serviceDate": "20200120"
             }
         ],
         "signatureIndicator": "Y"
     },
-    "controlNumber": "3197870",
+    "controlNumber": "91217",
     "date": "",
     "dependent": {
         "dateOfBirth": "19360701",
@@ -235,7 +231,7 @@ data = {
         "gender": "M",
         "lastName": "Doe",
         "middleName": "",
-        "relationshipToSubscriberCode": "",
+        "relationshipToSubscriberCode": "0",
         "ssn": "",
         "address": {
             "state": "OH"
@@ -256,7 +252,7 @@ data = {
                 "faxNumber": "",
                 "name": "",
                 "phoneNumber": "",
-                "validContact": True
+                "validContact": true
             },
             "employerId": "383765547",
             "firstName": "",
@@ -270,8 +266,8 @@ data = {
             "ssn": "",
             "stateLicenseNumber": "",
             "taxonomyCode": "",
-            "validBillingProvider": True,
-            "validProvider": True
+            "validBillingProvider": true,
+            "validProvider": true
         }
     ],
     "receiver": {
@@ -292,7 +288,7 @@ data = {
             "faxNumber": "",
             "name": "",
             "phoneNumber": "",
-            "validContact": True
+            "validContact": true
         },
         "employerId": "",
         "firstName": "",
@@ -306,8 +302,8 @@ data = {
         "ssn": "",
         "stateLicenseNumber": "",
         "taxonomyCode": "",
-        "validBillingProvider": True,
-        "validProvider": True
+        "validBillingProvider": true,
+        "validProvider": true
     },
     "rendering": {
         "address": {
@@ -323,7 +319,7 @@ data = {
             "faxNumber": "",
             "name": "",
             "phoneNumber": "",
-            "validContact": True
+            "validContact": true
         },
         "employerId": "",
         "firstName": "",
@@ -337,8 +333,8 @@ data = {
         "ssn": "",
         "stateLicenseNumber": "",
         "taxonomyCode": "",
-        "validBillingProvider": True,
-        "validProvider": True
+        "validBillingProvider": true,
+        "validProvider": true
     },
     "segmentCount": "",
     "submitter": {
@@ -347,7 +343,7 @@ data = {
             "faxNumber": "",
             "name": "",
             "phoneNumber": "123456",
-            "validContact": True
+            "validContact": true
         },
         "organizationName": "",
         "taxId": ""
@@ -377,64 +373,5 @@ data = {
     "tradingPartnerId": "",
     "tradingPartnerName": "Anthem Blue Cross Blue Shield Ohio",
     "tradingPartnerServiceId": "SB338",
-    "validSubscriber": True
+    "validSubscriber": true
 }
-
-#Login Details
-data2={
-    "client_id": "CG4HmDLlVfoXZmH8SrB70P8EG5C8bL38",
-    "client_secret": "8iLetYBRyJbRAb6j",
-    "grant_type": "client_credentials"
-}
-
-#Function to generate the token
-def token_generator():
-    try:
-        t=requests.post('https://apis.changehealthcare.com/apip/auth/v2/token',json=data2,verify=False)
-
-        # print(t.text)
-        response=json.loads(t.text)
-       
-        token = response['access_token']
-        print(token)
-        print("Token has been generated successfully\n\n")
-        return token
-
-    except:
-        print("Please enter the correct data format")
-
-token = token_generator()
-
-#Header for POST Request
-headers = {
-    "Authorization": "Bearer "+token,
-    "Content-Type":"application/json",
-}
-
-
-#Function to perform POST operation for the provided endpoint
-def post_request():
-    try:
-        s= requests.post('https://apis.changehealthcare.com/ai/claims-lifecycle/medical-network/v2/prediction',headers=headers, json=data,verify=False)
-
-        response = json.loads(s.text)
-        print(response)
-
-        
-        with open("test2.txt", "w", encoding="utf-8") as writeJsonfile:
-            json.dump(response, writeJsonfile, indent=4)
-        
-
-    except:
-        print("Check the data format and try again")
-
-post_request()
-
-
-
-
-
-
-
-
-
