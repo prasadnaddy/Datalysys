@@ -583,6 +583,9 @@ def db_operations2():
     responseJson=str(responseJson)
     requestJson=str(requestJson)
     
+    if missingRevenueCodes=='[]':
+        missingRevenueCodes=missingRevenueCodes.replace('[]','')        #By default [] is returned from API, we are changing it to ""
+    
     cursor=conn.cursor()
     
     cursor.execute("INSERT INTO UNITY.Claims_HeaderLevelPredictions(CENTERID,VoucherNumber,UserId,DaysToPay,Drg,ClaimStatus,IsMissingRevenueCodes,MissingRevenueCodes,IsMissingProcedureCodes,missingProcedureCodes,ErrorResponse,ResponseJSON,RequestJSON) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userId,daysToPay,drg,claimStatus,missingRevenueStatus,missingRevenueCodes,missingProcedureStatus,missingProcedureCodes,errorResponse,responseJson,requestJson))       #Inserting the lines into the DB
