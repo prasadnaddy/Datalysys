@@ -1,10 +1,12 @@
 import pyodbc,json,decimal,string
 
-class DecimalEncoder(json.JSONEncoder):                         #Class to add up the decimals to our JSON conversion
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            return float(o)                     
-        return super(DecimalEncoder, self).default(o)
+true=True
+
+# class DecimalEncoder(json.JSONEncoder):                         #Class to add up the decimals to our JSON conversion
+#     def default(self, o):
+#         if isinstance(o, decimal.Decimal):
+#             return float(o)                     
+#         return super(DecimalEncoder, self).default(o)
 
 #Connecting to our SQL Server Database using pyodbc
 def connect_db():
@@ -18,9 +20,8 @@ def connect_db():
         print("The connection to the DB failed")
     
     command= ("SELECT * FROM UNITY.Claims_Actuals WHERE VoucherNumber='3197870';")
+    # command= ("SELECT * FROM UNITY.Claims_Actuals WHERE VoucherNumber='3318330';")
     
-    command1=("SELECT * FROM UNITY.Claims_HeaderLevelPredictions WHERE VoucherNumber='3197870';")
-
     cursor= conn.cursor().execute(command)                      #Executing the SQL Command
 
     results = []
@@ -30,152 +31,201 @@ def connect_db():
     for row in cursor.fetchall():
         results.append(dict(zip(columns,row)))                  #Key -> Col Header and value is the Table row Values
     
-    with open("db.txt", "w", encoding="utf-8") as writeJsonfile:
-        json.dump(results, writeJsonfile, indent=4,cls=DecimalEncoder,default=str)                     #Writing the JSON format to a file
-        
-    cursor1= conn.cursor().execute(command1)
+    with open("Data_from_db.txt", "w", encoding="utf-8") as writeJsonfile:
+        json.dump(results, writeJsonfile, indent=4,default=str)                     #Writing the JSON format to a file
     
-    results1= []
-    
-    columns1 = [column1[0] for column1 in cursor1.description]      #Fetching the column headers
-
-    for row1 in cursor1.fetchall():
-        results1.append(dict(zip(columns1,row1)))                  #Key -> Col Header and value is the Table row Values
-    
-    with open("db1.txt", "w", encoding="utf-8") as writeJsonfile:
-        json.dump(results1, writeJsonfile, indent=4,cls=DecimalEncoder,default=str)  
-    
-
-connect_db()
+# connect_db()
 def calc_logic():
-    with open("db.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Database File for processing
+    with open("Data_from_db.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Database File for processing
         jsonFile=json.load(readJsonfile)
-
-    for i in jsonFile: 
-        first,second,third, fourth, fifth, sixth = jsonFile[0:6]        #Fetching the serviceCodeLines separately
+        lenJsonFile=len(jsonFile)
+        centerId=voucherNumber=userId=fServiceFee=fServiceId=DOB=Gender=ServiceDate=fProCode=fModifier=fICDCode=fServiceUnits=fReasonCode=fTimeStamp=fCarrierId=PrimaryDiagnosis=fServicePlaceId=fProcessed=VoucherCode=Relationship=""
+        claimTotal=0
+        ICDCodes=""
+        records = jsonFile[0:lenJsonFile]        #Fetching the serviceCodeLines separately
+        # print(records[0])
+    for i in records:
+        centerId=centerId+(str(i['CENTERID'])+',')
+        centerIdList=list(centerId.split(','))
         
-        centerId=first['CENTERID']
-        voucherNumber=first['VoucherNumber']
-        userId=first['UserId']
-        fServiceId=first['ServiceId']                                   #Extracting Required Attributes
-        DOB=first['DateOfBirth']
-        Gender=first['Gender']
-        ServiceDate=first['ServiceDate']
-        fProCode=first['PROCode']
-        fModifier=first['Modifier']
-        fICDCode=first['ICDCode']+','
-        fServiceFee=first['ServiceFee']
-        fServiceUnits=first['ServiceUnits']
-        fReasonCode=first['ReasonCodeId']
-        fTimeStamp=first['TimeStamp']
-        fCarrierId=first['CarrierId']
-        PrimaryDiagnosis=(first['PrimaryDiagnosisCode']).strip()
-        fServicePlaceId=first['ServicePlaceID_Old']
-        fProcessed=first['Processed']
-        VoucherCode=first['VoucherId']
-        Relationship=first['RelationShipToSubscriber']
+        voucherNumber=voucherNumber+(str(i['VoucherNumber'])+',')
+        voucherNumberList=list(voucherNumber.split(','))
+        
+        userId=userId+(str(i['UserId'])+',')
+        userIdList=list(userId.split(','))
+        
+        fServiceId=fServiceId+(str(i['ServiceId'])+',')     
+        fServiceIdList=list(fServiceId.split(','))  
+                                                                        #Extracting Required Attributes
+        DOB=DOB+(str(i['DateOfBirth'])+',')
+        DOBList=list(DOB.split(','))
+        
+        Gender=Gender+(str(i['Gender'])+',')
+        GenderList=list(Gender.split(','))
+        
+        ServiceDate=ServiceDate+(str(i['ServiceDate'])+',')
+        serviceDateList=list(ServiceDate.split(','))
+        
+        fProCode=fProCode+(str(i['PROCode'])+',')
+        fProCodeList=list(fProCode.split(','))
+        
+        fModifier=fModifier+(str(i['Modifier'])+',')
+        fModifierList=list(fModifier.split(','))
+        
+        fICDCode=fICDCode+(str(i['ICDCode'])+',')
+        fICDCodeList=list(fICDCode.split(','))
+        
+        fServiceFee=fServiceFee+(str(i['ServiceFee'])+',')
+        fServiceFeeList=list(fServiceFee.split(','))
+        
+        fServiceUnits=fServiceUnits+(str(i['ServiceUnits'])+',')
+        fServiceUnitsList=list(fServiceUnits.split(','))
+        
+        fReasonCode=fReasonCode+(str(i['ReasonCodeId'])+',')
+        fReasonCodeList=list(fReasonCode.split(','))
+        
+        fTimeStamp=fTimeStamp+(str(i['TimeStamp'])+',')
+        fTimeStampList=list(fTimeStamp.split(','))
+        
+        fCarrierId=fCarrierId+(str(i['CarrierId'])+',')
+        fCarrierIdList=list(fCarrierId.split(','))
+        
+        PrimaryDiagnosis=PrimaryDiagnosis+(str((i['PrimaryDiagnosisCode']).strip())+',')
+        PrimaryDiagnosisList=list(PrimaryDiagnosis.split(','))
+        
+        fServicePlaceId=fServicePlaceId+(str(i['ServicePlaceID_Old'])+',')
+        fServicePlaceIdList=list(fServicePlaceId.split(','))
+        
+        fProcessed=fProcessed+(str(i['Processed'])+',')
+        fProcessedList=list(fProcessed.split(','))
+        
+        VoucherCode=VoucherCode+(str(i['VoucherId'])+',')
+        VoucherCodeList=list(VoucherCode.split(','))
+        
+        Relationship=Relationship+(str(i['RelationShipToSubscriber'])+',')
+        RelationshipList=list(Relationship.split(','))
+        
 
-        sServiceId=second['ServiceId']                                   #Extracting Required Attributes
-        sProCode=second['PROCode']
-        sModifier=second['Modifier']
-        sICDCode=second['ICDCode']+','
-        sServiceFee=second['ServiceFee']
-        sServiceUnits=second['ServiceUnits']
-        sReasonCode=second['ReasonCodeId']
-        sTimeStamp=second['TimeStamp']
-        sCarrierId=second['CarrierId']
-        sServicePlaceId=second['ServicePlaceID_Old']
-        sProcessed=second['Processed']
-
-        tServiceId=third['ServiceId']                                   #Extracting Required Attributes
-        tProCode=third['PROCode']
-        tModifier=third['Modifier']
-        tICDCode=third['ICDCode']+','
-        tServiceFee=third['ServiceFee']
-        tServiceUnits=third['ServiceUnits']
-        tReasonCode=third['ReasonCodeId']
-        tTimeStamp=third['TimeStamp']
-        tCarrierId=third['CarrierId']
-        tServicePlaceId=third['ServicePlaceID_Old']
-        tProcessed=third['Processed']
-
-        fourthServiceId=fourth['ServiceId']                                   #Extracting Required Attributes
-        fourthProCode=fourth['PROCode']
-        fourthModifier=fourth['Modifier']
-        fourthICDCode=fourth['ICDCode']+','
-        fourthServiceFee=fourth['ServiceFee']
-        fourthServiceUnits=fourth['ServiceUnits']
-        fourthReasonCode=fourth['ReasonCodeId']
-        fourthTimeStamp=fourth['TimeStamp']
-        fourthCarrierId=fourth['CarrierId']
-        fourthServicePlaceId=fourth['ServicePlaceID_Old']
-        fourthProcessed=fourth['Processed']
-
-        fifthServiceId=fifth['ServiceId']                                   #Extracting Required Attributes
-        fifthProCode=fifth['PROCode']
-        fifthModifier=fifth['Modifier']
-        fifthICDCode=fifth['ICDCode']+','
-        fifthServiceFee=fifth['ServiceFee']
-        fifthServiceUnits=fifth['ServiceUnits']
-        fifthReasonCode=fifth['ReasonCodeId']
-        fifthTimeStamp=fifth['TimeStamp']
-        fifthCarrierId=fifth['CarrierId']
-        fifthServicePlaceId=fifth['ServicePlaceID_Old']
-        fifthProcessed=fifth['Processed']
-
-        sixthServiceId=sixth['ServiceId']                                   #Extracting Required Attributes
-        sixthProCode=sixth['PROCode']
-        sixthModifier=sixth['Modifier']
-        sixthICDCode=sixth['ICDCode']+','
-        sixthServiceFee=sixth['ServiceFee']
-        sixthServiceUnits=sixth['ServiceUnits']
-        sixthReasonCode=sixth['ReasonCodeId']
-        sixthTimeStamp=sixth['TimeStamp']
-        sixthCarrierId=sixth['CarrierId']
-        sixthServicePlaceId=sixth['ServicePlaceID_Old']
-        sixthProcessed=sixth['Processed']
-
-    PrimaryDiagnosis=PrimaryDiagnosis.replace(".","")
-    claimTotal= float(fServiceFee) + float(sServiceFee) + float(tServiceFee) + float(fourthServiceFee) + float(fifthServiceFee) + float(sixthServiceFee)
-    print(claimTotal)
-    ICDCodes=(fICDCode.strip()+sICDCode.strip()+tICDCode.strip()+fourthICDCode.strip()+fifthICDCode.strip()+sixthICDCode.strip())
-    ICDCodes=ICDCodes.replace(".","")
-    ICDList=list(ICDCodes.split(','))
-
-    for i in ICDList:
+    PrimaryDiagnosisList=PrimaryDiagnosisList[0].replace(".","")
+    ServiceFeeAmounts = (sorted(set(fServiceFeeList), key=fServiceFeeList.index))
+    for i in ServiceFeeAmounts:
         if(i==''):
-            ICDList.remove(i)
+            ServiceFeeAmounts.remove(i)
+        
+    for i in ServiceFeeAmounts:
+        claimTotal+=float(i)    
+        
+    fICDCodeList = (sorted(set(fICDCodeList), key=fICDCodeList.index))
 
-
-    ICDCodes = (sorted(set(ICDList), key=ICDList.index))        #To Remove duplicates in the List and maintain Order of List
+    ICDCodes= str(fICDCodeList)
     
-    if PrimaryDiagnosis in ICDCodes:
-        ICDCodes.remove(PrimaryDiagnosis)
-    print(ICDCodes)
-    date=fTimeStamp.split(' ')
-    ServiceDate=date[0].replace('-','')                         #Replacing the "-" in dates
+    ICDCodesList=ICDCodes.replace(".","")
+    ICDCodesList=eval(ICDCodesList)                 #Converting String to List without Splitting
+    
+    if PrimaryDiagnosisList in ICDCodesList:
+        ICDCodesList.remove(PrimaryDiagnosisList)
+        
+    for i in ICDCodesList:
+        if(i==''):
+            ICDCodesList.remove(i)
+        
+    
+    EmptyStrings=["","","","","","","","","","",""]
+    EmptyProCodes=["00000","00000","00000","00000","00000","00000","00000","00000","00000","00000","00000"]
+    # for i in EmptyStrings:
+    #     ICDCodesList.append(i)
+        
+    # print(ICDCodesList)
 
-    PatientDob=DOB.replace('-','')
-
-    #Our Request Data
-    data={
-        "precisionThreshold": 0.85,
+    
+    fTimeStampList=fTimeStampList[0].replace(".","")            #Fetching the ServiceDate Time Stamp
+    date=fTimeStampList.split(" ")
+    date=date[0].replace("-","")
+    # print(date)
+    
+    DOBList=DOBList[0].replace("-","")
+    # print(DOBList)
+    
+    primarycode={}
+    primarycode['diagnosisCode']=PrimaryDiagnosisList
+    primarycode['diagnosisTypeCode']="ABK"
+    
+    healthCareCodeInformation=[]
+    healthCareCodeInformation.append(primarycode)
+    
+    lenICD=len(ICDCodesList)
+    
+    icdcodesdict={}
+    
+    for i in range(lenICD):
+        icdcodesdict['diagnosisCode']=ICDCodesList[i]
+        icdcodesdict['diagnosisTypeCode']="ABF"
+        icddict=icdcodesdict.copy()
+        icddict1=json.dumps(icddict)
+        healthCareCodeInformation.append(icddict)
+        # healthCareCodeInformation1=json.dumps(healthCareCodeInformation)
+        
+    # print(healthCareCodeInformation)               #The Diagnosis codes are in JSON format now
+    
+    fProCodes = (sorted(set(fProCodeList), key=fProCodeList.index))         #Removing duplicate PROCODES
+    
+    for i in fProCodes:
+        if(i==''):
+            fProCodes.remove(i)
+    # print(fProCodes)
+    
+    servicelinescount=len(fProCodes)
+    
+    #Generating the service lines based on the PROCODE
+    servicelineslist=[]
+    for i in range(1,servicelinescount+1):
+        
+        servicelinesdict={
+                        "assignedNumber": str(i),
+                        "professionalService": {
+                        "compositeDiagnosisCodePointers": {
+                            "diagnosisCodePointers": [
+                            ""
+                            ]
+                        },
+                        "description": "",
+                        "lineItemChargeAmount": str(fServiceFeeList[i]),
+                        "measurementUnit": "UN",
+                        "placeOfServiceCode": "11",
+                        "procedureCode": str(fProCodeList[i]),
+                        "procedureIdentifier": "HC",
+                        "procedureModifier1": "GP",
+                        "serviceUnitCount": str(fServiceUnitsList[i])
+                        },
+                        "providerControlNumber": "",
+                        "serviceDate": str(date)
+                    }
+        
+        servicedict=servicelinesdict.copy()
+        servicedict1=json.dumps(servicedict)
+        servicelineslist.append(servicedict)
+        # servicelineslist1=json.dumps(servicelineslist)
+    # print(servicelineslist)
+    
+    #Our JSON Data
+    data = {
+        "precisionThreshold": 0.95,
         "billerId": "",
         "billing": {
             "address": {
-                "address1": "",
-                "address2": "",
-                "city": "",
-                "postalCode": "029193228",
-                "state": ""
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postalCode": "029193228",
+            "state": ""
             },
             "commercialNumber": "",
             "contactInformation": {
-                "email": "",
-                "faxNumber": "",
-                "name": "",
-                "phoneNumber": "",
-                "validContact": True
+            "email": "",
+            "faxNumber": "",
+            "name": "",
+            "phoneNumber": "",
+            "validContact": true
             },
             "employerId": "",
             "firstName": "",
@@ -189,266 +239,149 @@ def calc_logic():
             "ssn": "",
             "stateLicenseNumber": "",
             "taxonomyCode": "225100000X",
-            "validBillingProvider": True,
-            "validProvider": True
+            "validBillingProvider": true,
+            "validProvider": true
         },
         "claimInformation": {
             "benefitsAssignmentCertificationIndicator": "Y",
             "claimChargeAmount": str(claimTotal),
             "claimContractInformation": {
-                "contractAmount": "",
-                "contractCode": "",
-                "contractPercentage": "",
-                "contractTypeCode": "",
-                "contractVersionIdentifier": "",
-                "termsDiscountPercentage": ""
+            "contractAmount": "",
+            "contractCode": "",
+            "contractPercentage": "",
+            "contractTypeCode": "",
+            "contractVersionIdentifier": "",
+            "termsDiscountPercentage": ""
             },
             "claimDateInformation": {
-                "accidentDate": "",
-                "acuteManifestationDate": "",
-                "admissionDate": "",
-                "assumedAndRelinquishedCareBeginDate": "",
-                "assumedAndRelinquishedCareEndDate": "",
-                "authorizedReturnToWorkDate": "",
-                "disabilityBeginDate": "",
-                "disabilityEndDate": "",
-                "dischargeDate": "",
-                "firstContactDate": "",
-                "hearingAndVisionPrescriptionDate": "",
-                "initialTreatmentDate": "",
-                "lastMenstrualPeriodDate": "",
-                "lastSeenDate": "",
-                "lastWorkedDate": "",
-                "lastXRayDate": "",
-                "repricerReceivedDate": "",
-                "symptomDate": ""
+            "accidentDate": "",
+            "acuteManifestationDate": "",
+            "admissionDate": "",
+            "assumedAndRelinquishedCareBeginDate": "",
+            "assumedAndRelinquishedCareEndDate": "",
+            "authorizedReturnToWorkDate": "",
+            "disabilityBeginDate": "",
+            "disabilityEndDate": "",
+            "dischargeDate": "",
+            "firstContactDate": "",
+            "hearingAndVisionPrescriptionDate": "",
+            "initialTreatmentDate": "",
+            "lastMenstrualPeriodDate": "",
+            "lastSeenDate": "",
+            "lastWorkedDate": "",
+            "lastXRayDate": "",
+            "repricerReceivedDate": "",
+            "symptomDate": ""
             },
             "claimFilingCode": "CI",
             "claimFrequencyCode": "1",
             "claimSupplementalInformation": {
-                "carePlanOversightNumber": "",
-                "claimControlNumber": "",
-                "claimNumber": "",
-                "cliaNumber": "",
-                "demoProjectIdentifier": "",
-                "investigationalDeviceExemptionNumber": "",
-                "mammographyCertificationNumber": "",
-                "medicalRecordNumber": "",
-                "medicareCrossoverReferenceId": "",
-                "priorAuthorizationNumber": "",
-                "referralNumber": "",
-                "reportInformation": {
-                    "attachmentControlNumber": "",
-                    "attachmentReportTypeCode": "",
-                    "attachmentTransmissionCode": ""
-                },
-                "repricedClaimNumber": "",
-                "serviceAuthorizationExceptionCode": ""
+            "carePlanOversightNumber": "",
+            "claimControlNumber": "",
+            "claimNumber": "",
+            "cliaNumber": "",
+            "demoProjectIdentifier": "",
+            "investigationalDeviceExemptionNumber": "",
+            "mammographyCertificationNumber": "",
+            "medicalRecordNumber": "",
+            "medicareCrossoverReferenceId": "",
+            "priorAuthorizationNumber": "",
+            "referralNumber": "",
+            "reportInformation": {
+                "attachmentControlNumber": "",
+                "attachmentReportTypeCode": "",
+                "attachmentTransmissionCode": ""
             },
-            "healthCareCodeInformation": [
-                {
-                    "diagnosisCode": str(PrimaryDiagnosis),
-                    "diagnosisTypeCode": "ABK"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[0]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[1]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[2]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[3]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[4]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[5]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[6]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[7]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[8]),
-                    "diagnosisTypeCode": "ABF"
-                },
-                {
-                    "diagnosisCode": str(ICDCodes[9]),
-                    "diagnosisTypeCode": "ABF"
-                }
-            ],
+            "repricedClaimNumber": "",
+            "serviceAuthorizationExceptionCode": ""
+            },
+            "healthCareCodeInformation": healthCareCodeInformation,
             "patientAmountPaid": "",
             "patientControlNumber": "",
             "patientWeight": "",
-            "placeOfServiceCode": str(fServiceId),
+            "placeOfServiceCode": "11",
             "planParticipationCode": "A",
             "propertyCasualtyClaimNumber": "",
-            "releaseInformationCode": "Y",
+            "releaseInformationCode": "",
             "serviceFacilityLocation": {
-                "address": {
-                    "address1": "",
-                    "address2": "",
-                    "city": "",
-                    "postalCode": "",
-                    "state": ""
-                },
-                "organizationName": ""
+            "address": {
+                "address1": "",
+                "address2": "",
+                "city": "",
+                "postalCode": "",
+                "state": ""
             },
-            "serviceLines": [
-                {
-                    "assignedNumber": "1",
-                    "professionalService": {
-                        "compositeDiagnosisCodePointers": {
-                            "diagnosisCodePointers": [
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "1",
-                                "6",
-                                "7",
-                                "8",
-                                "9",
-                                "10",
-                                "11"
-                            ]
-                        },
-                        "description": "",
-                        "lineItemChargeAmount": str(fServiceFee),
-                        "measurementUnit": "UN",
-                        "placeOfServiceCode": "",
-                        "procedureCode": str(fProCode),
-                        "procedureIdentifier": "HC",
-                        "serviceUnitCount": str(fServiceUnits),
-                        "procedureModifier1": ""
-                    },
-                    "providerControlNumber": "",
-                    "serviceDate": str(ServiceDate)
-                },
-                {
-                    "assignedNumber": "2",
-                    "professionalService": {
-                        "compositeDiagnosisCodePointers": {
-                            "diagnosisCodePointers": [
-                                "4"
-                            ]
-                        },
-                        "description": "",
-                        "lineItemChargeAmount": str(sServiceFee),
-                        "measurementUnit": "UN",
-                        "placeOfServiceCode": "",
-                        "procedureCode": str(sServiceFee),
-                        "procedureIdentifier": "HC",
-                        "serviceUnitCount": str(sServiceUnits),
-                        "procedureModifier1": ""
-                    },
-                    "providerControlNumber": "",
-                    "serviceDate": str(ServiceDate)
-                },
-                {
-                    "assignedNumber": "3",
-                    "professionalService": {
-                        "compositeDiagnosisCodePointers": {
-                            "diagnosisCodePointers": [
-                                "3",
-                                "11"
-                            ]
-                        },
-                        "description": "",
-                        "lineItemChargeAmount": str(tServiceFee),
-                        "measurementUnit": "UN",
-                        "placeOfServiceCode": "",
-                        "procedureCode": str(tProCode),
-                        "procedureIdentifier": "HC",
-                        "serviceUnitCount": str(tServiceUnits),
-                        "procedureModifier1": ""
-                    },
-                    "providerControlNumber": "",
-                    "serviceDate": str(ServiceDate)
-                }
-            ],
-            "signatureIndicator": "Y"
+            "organizationName": ""
+            },
+            "serviceLines": servicelineslist,
+            "signatureIndicator": ""
         },
-        "controlNumber": str(VoucherCode),
+        "controlNumber": str(voucherNumberList[0]),
         "date": "",
         "dependent": {
-            "dateOfBirth": str(PatientDob),
-            "firstName": "John ",
-            "gender": "M",
-            "lastName": "Doe",
+            "dateOfBirth": str(DOBList),
+            "firstName": "",
+            "gender": "F",
+            "lastName": "",
             "middleName": "",
-            "relationshipToSubscriberCode": str(Relationship),
+            "relationshipToSubscriberCode": str(RelationshipList[0]),
             "ssn": "",
             "address": {
-                "state": "OH"
+            "state": "OH"
             }
         },
         "providers": [
             {
-                "address": {
-                    "address1": "2365",
-                    "address2": "INNIS RD",
-                    "city": "COLUMBUS",
-                    "postalCode": "432243730",
-                    "state": "OH"
-                },
-                "commercialNumber": "",
-                "contactInformation": {
-                    "email": "",
-                    "faxNumber": "",
-                    "name": "",
-                    "phoneNumber": "",
-                    "validContact": True
-                },
-                "employerId": "383765547",
-                "firstName": "",
-                "lastName": "HOFHC",
-                "locationNumber": "",
-                "middleName": "",
-                "npi": "",
-                "organisationName": "HOFHC",
-                "providerType": "",
-                "providerUpinNumber": "",
-                "ssn": "",
-                "stateLicenseNumber": "",
-                "taxonomyCode": "",
-                "validBillingProvider": True,
-                "validProvider": True
+            "address": {
+                "address1": "",
+                "address2": "",
+                "city": "",
+                "postalCode": "",
+                "state": ""
+            },
+            "commercialNumber": "",
+            "contactInformation": {
+                "email": "",
+                "faxNumber": "",
+                "name": "",
+                "phoneNumber": "",
+                "validContact": true
+            },
+            "employerId": "",
+            "firstName": "",
+            "lastName": "",
+            "locationNumber": "",
+            "middleName": "",
+            "npi": "",
+            "organisationName": "",
+            "providerType": "",
+            "providerUpinNumber": "",
+            "ssn": "",
+            "stateLicenseNumber": "",
+            "taxonomyCode": "",
+            "validBillingProvider": true,
+            "validProvider": true
             }
         ],
         "receiver": {
-            "organizationName": "HOFHC",
+            "organizationName": "",
             "taxId": ""
         },
         "referring": {
             "address": {
-                "address1": "",
-                "address2": "",
-                "city": "",
-                "postalCode": "",
-                "state": ""
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postalCode": "",
+            "state": ""
             },
             "commercialNumber": "",
             "contactInformation": {
-                "email": "",
-                "faxNumber": "",
-                "name": "",
-                "phoneNumber": "",
-                "validContact": True
+            "email": "",
+            "faxNumber": "",
+            "name": "",
+            "phoneNumber": "",
+            "validContact": true
             },
             "employerId": "",
             "firstName": "",
@@ -462,24 +395,24 @@ def calc_logic():
             "ssn": "",
             "stateLicenseNumber": "",
             "taxonomyCode": "",
-            "validBillingProvider": True,
-            "validProvider": True
+            "validBillingProvider": true,
+            "validProvider": true
         },
         "rendering": {
             "address": {
-                "address1": "",
-                "address2": "",
-                "city": "",
-                "postalCode": "",
-                "state": ""
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postalCode": "",
+            "state": ""
             },
             "commercialNumber": "",
             "contactInformation": {
-                "email": "",
-                "faxNumber": "",
-                "name": "",
-                "phoneNumber": "",
-                "validContact": True
+            "email": "",
+            "faxNumber": "",
+            "name": "",
+            "phoneNumber": "",
+            "validContact": true
             },
             "employerId": "",
             "firstName": "",
@@ -493,17 +426,17 @@ def calc_logic():
             "ssn": "",
             "stateLicenseNumber": "",
             "taxonomyCode": "",
-            "validBillingProvider": True,
-            "validProvider": True
+            "validBillingProvider": true,
+            "validProvider": true
         },
         "segmentCount": "",
         "submitter": {
             "contactInformation": {
-                "email": "",
-                "faxNumber": "",
-                "name": "",
-                "phoneNumber": "123456",
-                "validContact": True
+            "email": "",
+            "faxNumber": "",
+            "name": "",
+            "phoneNumber": "",
+            "validContact": true
             },
             "organizationName": "",
             "taxId": ""
@@ -511,18 +444,18 @@ def calc_logic():
         "submitterId": "",
         "subscriber": {
             "address": {
-                "address1": "1234",
-                "address2": "ABCD Street",
-                "city": "COLUMBUS",
-                "postalCode": "43232",
-                "state": "OH"
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postalCode": "",
+            "state": "OH"
             },
-            "dateOfBirth": str(PatientDob),
-            "firstName": "John",
-            "gender": "M",
+            "dateOfBirth": str(DOBList),
+            "firstName": "",
+            "gender": "",
             "groupNumber": "",
-            "lastName": "Doe",
-            "memberId": "911111731240",
+            "lastName": "",
+            "memberId": "",
             "middleName": "",
             "paymentResponsibilityLevelCode": "P",
             "policyNumber": "",
@@ -531,17 +464,16 @@ def calc_logic():
         },
         "time": "",
         "tradingPartnerId": "",
-        "tradingPartnerName": "Anthem Blue Cross Blue Shield Ohio",
-        "tradingPartnerServiceId": "SB338",
-        "validSubscriber": True
+        "tradingPartnerName": "",
+        "tradingPartnerServiceId": "60054",
+        "validSubscriber": true
     }
 
-    print("Writing the file now..")
+    print("\nFiles are written..\n\nDatabase has been modified now..")
+    with open("Request_Json_File.json", "w", encoding="utf-8") as writeJsonfile:
+        json.dump(data, writeJsonfile, indent=4,default=str)
 
-    with open("fileTest.txt", "w", encoding="utf-8") as writeJsonfile:
-        json.dump(data, writeJsonfile, indent=4,cls=DecimalEncoder,default=str)
-
-calc_logic()
+# calc_logic()
 
 def db_operations2():
     try:
@@ -553,27 +485,30 @@ def db_operations2():
     except:
         print("The connection to the DB failed")
         
-    with open("fileTest.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Request and Response File for Insertions
+    with open("Request_Json_File.json", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Request and Response File for Insertions
         requestJson=json.load(readJsonfile)
         
-    with open("test.txt", "r", encoding="utf-8") as readJsonfile:
+    with open("Response_Json_File.json", "r", encoding="utf-8") as readJsonfile:
         responseJson=json.load(readJsonfile)
         
     
     values=(responseJson['claims'][0].values())
     values=list(values)
-    print(values)                   #We get all the Values as dict_values here
+    # print(values)                   #We get all the Values as dict_values here
     
-    with open("db.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Database File for processing
+    with open("Data_from_db.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Database File for processing
         jsonFile=json.load(readJsonfile)
         
-    first=jsonFile[0]
+    lenJsonFile=len(jsonFile)
+    records = jsonFile[0:lenJsonFile]
     
-    centerId=first['CENTERID']+1
-    voucherNumber=first['VoucherNumber']
-    userId=first['UserId']
-    daysToPay= str(values[0])            #Fetching the DaystoPay
-    drg=str(int(values[3]))                   #Fetching the DRG from 4th value and False denotes to 0 by using the int function
+    for i in records:
+        centerId=i['CENTERID']+1
+        voucherNumber=i['VoucherNumber']
+        userID=i['UserId']
+    
+    daysToPay= str(values[0])                               #Fetching the DaystoPay
+    drg=str(int(values[3]))                                 #Fetching the DRG from 4th value and False denotes to 0 by using the int function
     claimStatus=str(int(values[2]))
     missingRevenueStatus=str(int(values[5]['missing']))      #Fetching a value and inside it we have a dictionary that contains this value
     missingRevenueCodes=str(values[5]['codes'][::])
@@ -587,12 +522,121 @@ def db_operations2():
         missingRevenueCodes=missingRevenueCodes.replace('[]','')        #By default [] is returned from API, we are changing it to ""
     
     cursor=conn.cursor()
-    
-    cursor.execute("INSERT INTO UNITY.Claims_HeaderLevelPredictions(CENTERID,VoucherNumber,UserId,DaysToPay,Drg,ClaimStatus,IsMissingRevenueCodes,MissingRevenueCodes,IsMissingProcedureCodes,missingProcedureCodes,ErrorResponse,ResponseJSON,RequestJSON) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userId,daysToPay,drg,claimStatus,missingRevenueStatus,missingRevenueCodes,missingProcedureStatus,missingProcedureCodes,errorResponse,responseJson,requestJson))       #Inserting the lines into the DB
+    print("Header Table is updated with CENTERID : "+str(centerId))
+    cursor.execute("INSERT INTO UNITY.Claims_HeaderLevelPredictions(CENTERID,VoucherNumber,UserId,DaysToPay,Drg,ClaimStatus,IsMissingRevenueCodes,MissingRevenueCodes,IsMissingProcedureCodes,missingProcedureCodes,ErrorResponse,ResponseJSON,RequestJSON) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userID,daysToPay,drg,claimStatus,missingRevenueStatus,missingRevenueCodes,missingProcedureStatus,missingProcedureCodes,errorResponse,responseJson,requestJson))       #Inserting the lines into the DB
     conn.commit()
+     
+# db_operations2()
+
+def dboperations3():
+    try:
+        conn = pyodbc.connect('Driver={SQL Server};' 
+        'Server=183.83.217.150,35001;' 
+        'Database=unityprod_17092019;'
+        'uid=unityAppUser;pwd=Winter@2019')
+                
+    except:
+        print("The connection to the DB failed")
+        
+    with open("Request_Json_File.json", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Request and Response File for Insertions
+        requestJson=json.load(readJsonfile)
+        
+    with open("Response_Json_File.json", "r", encoding="utf-8") as readJsonfile:
+        responseJson=json.load(readJsonfile)
+        
     
+    values=(responseJson['claims'][0].values())
+    values=list(values)
+    # print(values)                   #We get all the Values as dict_values here
     
-db_operations2()
+    with open("Data_from_db.txt", "r", encoding="utf-8") as readJsonfile:         #Opening the Written Database File for processing
+        jsonFile=json.load(readJsonfile)
+        
+    lenJsonFile=len(jsonFile)
+    records = jsonFile[0:lenJsonFile]
+    counter=0
+    lenlines=len(values[4])
+    # print(lenlines)
+    ReasonList=[]
+    ReasonProb=[]
+    ECarcCodes=[]
+    
+    for i in records:
+        centerId=i['CENTERID']+100                                       #First Line Output to DB
+        voucherNumber=i['VoucherNumber']
+        userId=i['UserId']
+        serviceId=i['ServiceId']
+        centerId+=1
+        
+    for j in range(0,lenlines):
+        try:
+            lineId1=str(values[4][j]['lineId'])
+            lineStatus1=str(int(values[4][j]['lineDenied']))
+            allowedAmount1=str(values[4][j]['allowedAmount'])
+            denialReason=(values[4][j]['denialReasons'])
+            for k in denialReason:
+                ReasonList.append(k['reason'])
+                ReasonProb.append(k['probability'])
+                ECarcCodes.append(k['eraCarcCodes'])
+            
+            for k in ReasonList:
+                R1=ReasonList[0]
+                R2=ReasonList[1]
+                R3=ReasonList[2]
+                
+            for k in ReasonProb:
+                R1P=float(ReasonProb[0])
+                R2P=float(ReasonProb[1])
+                R3P=float(ReasonProb[2])
+                
+            for k in ECarcCodes:
+                R1C1=ECarcCodes[0][0]['code']
+                R1C1P=float(ECarcCodes[0][0]['probability'])                   #R1 Results
+                R1C2=ECarcCodes[0][1]['code']
+                R1C2P=float(ECarcCodes[0][1]['probability'])
+                R1C3=ECarcCodes[0][2]['code']
+                R1C3P=float(ECarcCodes[0][2]['probability'])
+                
+                R2C1=ECarcCodes[1][0]['code']
+                R2C1P=float(ECarcCodes[1][0]['probability'])
+                R2C2=ECarcCodes[1][1]['code']                           #R2 Results
+                R2C2P=float(ECarcCodes[1][1]['probability'])
+                R2C3=ECarcCodes[1][2]['code']
+                R2C3P=float(ECarcCodes[1][2]['probability'])
+                
+                R3C1=ECarcCodes[2][0]['code']
+                R3C1P=float(ECarcCodes[2][0]['probability'])
+                R3C2=ECarcCodes[2][1]['code']                           #R3 Results
+                R3C2P=float(ECarcCodes[2][1]['probability'])
+                R3C3=ECarcCodes[2][2]['code']
+                R3C3P=float(ECarcCodes[2][2]['probability'])
+            
+            centerId+=1
+            
+            # print(type(R1))
+            
+        except(KeyError):
+            denialReason="{}"
+            # R1=R1P=R1C1=R1C1P=R1C2=R1C2P=R1C3=R1C3P=R2=R2P=R2C1=R2C1P=R2C2=R2C2P=R2C3=R2C3P=R3=R3P=R3C1=R3C1P=R3C2=R3C2P=R3C3=R3C3P="NULL"
+            centerId+=1
+            print("Line Levels are updated with CENTER ID : "+str(centerId))
+            cursor=conn.cursor()
+        
+            cursor.execute("INSERT INTO UNITY.Claims_LineLevelPredictions(CENTERID,VoucherNumber,UserId,ServiceID,LineId,LineStatus,AllowedAmount,DenialReasons) VALUES (?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userId,serviceId,lineId1,lineStatus1,allowedAmount1,denialReason))       #Inserting the lines into the DB
+            conn.commit()
+            # centerId+=1
+            continue
+              
+        print("Line Levels are updated with CENTER ID : "+str(centerId))
+        # print(denList)
+        denialReason=str(values[4][j]['denialReasons'])
+        cursor=conn.cursor()
+        cursor.execute("INSERT INTO UNITY.Claims_LineLevelPredictions(CENTERID,VoucherNumber,UserId,ServiceID,LineId,LineStatus,AllowedAmount,DenialReasons,R1,R1P,R1C1,R1C1P,R1C2,R1C2P,R1C3,R1C3P,R2,R2P,R2C1,R2C1P,R2C2,R2C2P,R2C3,R2C3P,R3,R3P,R3C1,R3C1P,R3C2,R3C2P,R3C3,R3C3P) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userId,serviceId,lineId1,lineStatus1,allowedAmount1,denialReason,R1,R1P,R1C1,R1C1P,R1C2,R1C2P,R1C3,R1C3P,R2,R2P,R2C1,R2C1P,R2C2,R2C2P,R2C3,R2C3P,R3,R3P,R3C1,R3C1P,R3C2,R3C2P,R3C3,R3C3P))       #Inserting the lines into the DB
+        # # cursor.execute("INSERT INTO UNITY.Claims_LineLevelPredictions(CENTERID,VoucherNumber,UserId,ServiceID,LineId,LineStatus,AllowedAmount,DenialReasons) VALUES (?,?,?,?,?,?,?,?)",(centerId,voucherNumber,userId,serviceId,lineId1,lineStatus1,allowedAmount1,denialReason))       #Inserting the lines into the DB
+        conn.commit()
+    
+        
+# dboperations3()
 
     
 

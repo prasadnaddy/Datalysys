@@ -1,5 +1,5 @@
 {
-    "precisionThreshold": 0.85,
+    "precisionThreshold": 0.95,
     "billerId": "",
     "billing": {
         "address": {
@@ -34,7 +34,7 @@
     },
     "claimInformation": {
         "benefitsAssignmentCertificationIndicator": "Y",
-        "claimChargeAmount": "440.0",
+        "claimChargeAmount": "152.0",
         "claimContractInformation": {
             "contractAmount": "",
             "contractCode": "",
@@ -85,59 +85,14 @@
             "repricedClaimNumber": "",
             "serviceAuthorizationExceptionCode": ""
         },
-        "healthCareCodeInformation": [
-            {
-                "diagnosisCode": "G8929",
-                "diagnosisTypeCode": "ABK"
-            },
-            {
-                "diagnosisCode": "C44310",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "E119",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "E669",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "E785",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "I10",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "L821",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "M25561",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "M25562",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "N3281",
-                "diagnosisTypeCode": "ABF"
-            },
-            {
-                "diagnosisCode": "Z794",
-                "diagnosisTypeCode": "ABF"
-            }
-        ],
+        "healthCareCodeInformation": "[{\"diagnosisCode\": \"Z2821\", \"diagnosisTypeCode\": \"ABK\"}, {\"diagnosisCode\": \"E785\", \"diagnosisTypeCode\": \"ABF\"}, {\"diagnosisCode\": \"I10\", \"diagnosisTypeCode\": \"ABF\"}, {\"diagnosisCode\": \"R1013\", \"diagnosisTypeCode\": \"ABF\"}, {\"diagnosisCode\": \"R7303\", \"diagnosisTypeCode\": \"ABF\"}]",
         "patientAmountPaid": "",
         "patientControlNumber": "",
         "patientWeight": "",
-        "placeOfServiceCode": "149325",
+        "placeOfServiceCode": "11",
         "planParticipationCode": "A",
         "propertyCasualtyClaimNumber": "",
-        "releaseInformationCode": "Y",
+        "releaseInformationCode": "",
         "serviceFacilityLocation": {
             "address": {
                 "address1": "",
@@ -148,88 +103,16 @@
             },
             "organizationName": ""
         },
-        "serviceLines": [
-            {
-                "assignedNumber": "1",
-                "professionalService": {
-                    "compositeDiagnosisCodePointers": {
-                        "diagnosisCodePointers": [
-                            "2",
-                            "3",
-                            "4",
-                            "5",
-                            "1",
-                            "6",
-                            "7",
-                            "8",
-                            "9",
-                            "10",
-                            "11"
-                        ]
-                    },
-                    "description": "",
-                    "lineItemChargeAmount": "209.00",
-                    "measurementUnit": "UN",
-                    "placeOfServiceCode": "",
-                    "procedureCode": "99214",
-                    "procedureIdentifier": "HC",
-                    "serviceUnitCount": "1",
-                    "procedureModifier1": ""
-                },
-                "providerControlNumber": "",
-                "serviceDate": "20200120"
-            },
-            {
-                "assignedNumber": "2",
-                "professionalService": {
-                    "compositeDiagnosisCodePointers": {
-                        "diagnosisCodePointers": [
-                            "4"
-                        ]
-                    },
-                    "description": "",
-                    "lineItemChargeAmount": "0.00",
-                    "measurementUnit": "UN",
-                    "placeOfServiceCode": "",
-                    "procedureCode": "0.00",
-                    "procedureIdentifier": "HC",
-                    "serviceUnitCount": "1",
-                    "procedureModifier1": ""
-                },
-                "providerControlNumber": "",
-                "serviceDate": "20200120"
-            },
-            {
-                "assignedNumber": "3",
-                "professionalService": {
-                    "compositeDiagnosisCodePointers": {
-                        "diagnosisCodePointers": [
-                            "3",
-                            "11"
-                        ]
-                    },
-                    "description": "",
-                    "lineItemChargeAmount": "11.00",
-                    "measurementUnit": "UN",
-                    "placeOfServiceCode": "",
-                    "procedureCode": "82947",
-                    "procedureIdentifier": "HC",
-                    "serviceUnitCount": "1",
-                    "procedureModifier1": ""
-                },
-                "providerControlNumber": "",
-                "serviceDate": "20200120"
-            }
-        ],
-        "signatureIndicator": "Y"
+        "serviceLines": "[{\"assignedNumber\": \"1\", \"professionalService\": {\"compositeDiagnosisCodePointers\": {\"diagnosisCodePointers\": [\"\"]}, \"description\": \"\", \"lineItemChargeAmount\": \"11.00\", \"measurementUnit\": \"UN\", \"placeOfServiceCode\": \"11\", \"procedureCode\": \"82947\", \"procedureIdentifier\": \"HC\", \"procedureModifier1\": \"GP\", \"serviceUnitCount\": \"1\"}, \"providerControlNumber\": \"\", \"serviceDate\": \"20200120\"}, {\"assignedNumber\": \"2\", \"professionalService\": {\"compositeDiagnosisCodePointers\": {\"diagnosisCodePointers\": [\"\"]}, \"description\": \"\", \"lineItemChargeAmount\": \"141.00\", \"measurementUnit\": \"UN\", \"placeOfServiceCode\": \"11\", \"procedureCode\": \"99213\", \"procedureIdentifier\": \"HC\", \"procedureModifier1\": \"GP\", \"serviceUnitCount\": \"1\"}, \"providerControlNumber\": \"\", \"serviceDate\": \"20200120\"}]",
+        "signatureIndicator": ""
     },
-    "controlNumber": "91217",
+    "controlNumber": "90141",
     "date": "",
     "dependent": {
-        "dateOfBirth": "19360701",
-        "firstName": "John ",
-        "gender": "M",
-        "lastName": "Doe",
+        "dateOfBirth": "19810405",
+        "firstName": "",
+        "gender": "F",
+        "lastName": "",
         "middleName": "",
         "relationshipToSubscriberCode": "0",
         "ssn": "",
@@ -240,11 +123,11 @@
     "providers": [
         {
             "address": {
-                "address1": "2365",
-                "address2": "INNIS RD",
-                "city": "COLUMBUS",
-                "postalCode": "432243730",
-                "state": "OH"
+                "address1": "",
+                "address2": "",
+                "city": "",
+                "postalCode": "",
+                "state": ""
             },
             "commercialNumber": "",
             "contactInformation": {
@@ -254,13 +137,13 @@
                 "phoneNumber": "",
                 "validContact": true
             },
-            "employerId": "383765547",
+            "employerId": "",
             "firstName": "",
-            "lastName": "HOFHC",
+            "lastName": "",
             "locationNumber": "",
             "middleName": "",
             "npi": "",
-            "organisationName": "HOFHC",
+            "organisationName": "",
             "providerType": "",
             "providerUpinNumber": "",
             "ssn": "",
@@ -271,7 +154,7 @@
         }
     ],
     "receiver": {
-        "organizationName": "HOFHC",
+        "organizationName": "",
         "taxId": ""
     },
     "referring": {
@@ -342,7 +225,7 @@
             "email": "",
             "faxNumber": "",
             "name": "",
-            "phoneNumber": "123456",
+            "phoneNumber": "",
             "validContact": true
         },
         "organizationName": "",
@@ -351,18 +234,18 @@
     "submitterId": "",
     "subscriber": {
         "address": {
-            "address1": "1234",
-            "address2": "ABCD Street",
-            "city": "COLUMBUS",
-            "postalCode": "43232",
+            "address1": "",
+            "address2": "",
+            "city": "",
+            "postalCode": "",
             "state": "OH"
         },
-        "dateOfBirth": "19360701",
-        "firstName": "John",
-        "gender": "M",
+        "dateOfBirth": "19810405",
+        "firstName": "",
+        "gender": "",
         "groupNumber": "",
-        "lastName": "Doe",
-        "memberId": "911111731240",
+        "lastName": "",
+        "memberId": "",
         "middleName": "",
         "paymentResponsibilityLevelCode": "P",
         "policyNumber": "",
@@ -371,7 +254,7 @@
     },
     "time": "",
     "tradingPartnerId": "",
-    "tradingPartnerName": "Anthem Blue Cross Blue Shield Ohio",
-    "tradingPartnerServiceId": "SB338",
+    "tradingPartnerName": "",
+    "tradingPartnerServiceId": "60054",
     "validSubscriber": true
 }

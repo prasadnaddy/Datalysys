@@ -1,5 +1,5 @@
 {
-    "requestId": "4907aa80-692f-11ea-a9ff-53cd94941a5a",
+    "requestId": "6bbaac80-7726-11ea-97fd-03a3a77e71e1",
     "modelVersion": "0.14.7",
     "claims": [
         {
@@ -11,73 +11,17 @@
                 {
                     "lineId": "1",
                     "lineDenied": false,
-                    "allowedAmount": 87.86
+                    "allowedAmount": 11.53
                 },
                 {
                     "lineId": "2",
-                    "lineDenied": true,
-                    "allowedAmount": 70.88,
-                    "denialReasons": [
-                        {
-                            "reason": "Service not covered",
-                            "probability": 0.377,
-                            "eraCarcCodes": [
-                                {
-                                    "code": "CO256",
-                                    "probability": 0.87
-                                },
-                                {
-                                    "code": "CO96",
-                                    "probability": 0.106
-                                },
-                                {
-                                    "code": "PI96",
-                                    "probability": 0.018
-                                }
-                            ]
-                        },
-                        {
-                            "reason": "Duplicate Claim / Service",
-                            "probability": 0.171,
-                            "eraCarcCodes": [
-                                {
-                                    "code": "OA18",
-                                    "probability": 0.935
-                                },
-                                {
-                                    "code": "CO18",
-                                    "probability": 0.025
-                                },
-                                {
-                                    "code": "COB13",
-                                    "probability": 0.02
-                                }
-                            ]
-                        },
-                        {
-                            "reason": "Bundling",
-                            "probability": 0.126,
-                            "eraCarcCodes": [
-                                {
-                                    "code": "OA94",
-                                    "probability": 0.451
-                                },
-                                {
-                                    "code": "CO234",
-                                    "probability": 0.283
-                                },
-                                {
-                                    "code": "CO97",
-                                    "probability": 0.152
-                                }
-                            ]
-                        }
-                    ]
+                    "lineDenied": false,
+                    "allowedAmount": 4.01
                 },
                 {
                     "lineId": "3",
                     "lineDenied": false,
-                    "allowedAmount": 4.07
+                    "allowedAmount": 89.83
                 }
             ],
             "missingRevenueCodes": {
